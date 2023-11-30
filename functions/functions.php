@@ -4,7 +4,7 @@ function passGenerator()
     if (isset($_GET['passLength'])) {
         if (($_GET['passLength'] !== '') && ($_GET['passLength'] <= 20) && ($_GET['passLength'] >= 8)) {
             $passLength = $_GET['passLength'];
-            $symbols = '!?&%$<>^+-*/()[]{}@#_=';
+            $symbols = '!?&%$>^+-*/()[]{}@#_=';
             $letters = 'abcdefghijklmnopqrstuvwxyz';
             $upperLetter = strtoupper($letters);
             $numbers = '1234567890';
@@ -16,7 +16,9 @@ function passGenerator()
                     $newPass .= $newWord;
                 }
             }
-            return $newPass;
+            $_SESSION['newpassword'] = $newPass;
+            header('Location: passgenerated.php');
+            die();
         }
         return 'Inserisci un numero valido';
     }
