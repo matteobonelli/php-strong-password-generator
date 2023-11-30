@@ -6,12 +6,11 @@ include __DIR__ . '/partials/header.php';
 $_SESSION['newpassword'] = '';
 
 $error = passGenerator();
-
 // var_dump($error);
 ?>
 
 
-<?php if (isset($error) && ($error === 'Inserisci un numero valido') || ($error === 'Inserisci un parametro')) { ?>
+<?php if (isset($error) && ($error === 'Inserisci un numero valido') || ($error === 'Inserisci almeno 2 parametri')) { ?>
     <div class="alert alert-danger">
         <?php echo $error ?>
     </div>
@@ -36,6 +35,18 @@ $error = passGenerator();
         <input class="form-check-input" type="checkbox" value="symbols" id="flexCheckDefault" name='parametri[]'>
         <label class="form-check-label" for="flexCheckDefault">
             Simboli
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="repeated" id="flexRadioDefault1" value="repeat">
+        <label class="form-check-label" for="flexRadioDefault1">
+            Con ripetizioni
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="repeated" id="flexRadioDefault2" value="norepeat" checked>
+        <label class="form-check-label" for="flexRadioDefault2">
+            Senza ripetizioni
         </label>
     </div>
 </form>

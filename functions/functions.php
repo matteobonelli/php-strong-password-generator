@@ -13,7 +13,7 @@ function passGenerator()
             if (isset($_GET['parametri']) && (!empty($_GET['parametri']))) {
                 if (count($_GET['parametri']) === 3) {
                     $allCharacters = $symbols . $letters . $numbers;
-                } else {
+                } else if (count($_GET['parametri']) === 2) {
                     $parameters = $_GET['parametri'];
                     for ($i = 0; $i < count($parameters); $i++) {
                         $newString = '';
@@ -27,17 +27,33 @@ function passGenerator()
                         }
                         $allCharacters .= $newString;
                     }
+                } else {
+                    return 'Inserisci almeno 2 parametri';
                 }
             } else {
-                return 'Inserisci un parametro';
+                return 'Inserisci almeno 2 parametri';
             }
 
-            while (strlen($newPass) < $passLength) {
-                $newWord = $allCharacters[rand(0, strlen($allCharacters) - 1)];
-                if (!strpos($newPass, $newWord)) {
-                    $newPass .= $newWord;
+            if (isset($_GET['repeated'])) {
+                $repeated = $_GET['repeated'];
+                if ($repeated === 'norepeat') {
+                    while (strlen($newPass) < $passLength) {
+                        $newWord = $allCharacters[rand(0, strlen($allCharacters) - 1)];
+                        if (!str_contains($newPass, $newWord)) {
+                            $newPass .= $newWord;
+                        }
+                    }
+                } else if ($repeated === 'repeat') {
+                    while (strlen($newPass) < $passLength) {
+                        $newWord = $allCharacters[rand(0, strlen($allCharacters) - 1)];
+                        $newPass .= $newWord;
+                    }
                 }
+            } else {
+                return;
             }
+
+
             $_SESSION['newpassword'] = $newPass;
             header('Location: passgenerated.php');
             die();
