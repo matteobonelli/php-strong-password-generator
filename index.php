@@ -10,7 +10,7 @@ $error = passGenerator();
 ?>
 
 
-<?php if (isset($error) && ($error === 'Inserisci un numero valido') || ($error === 'Inserisci almeno 2 parametri')) { ?>
+<?php if (isset($error) && ($error === 'Inserisci un numero valido') || ($error === 'Inserisci almeno un parametro') || ($error === 'Inserisci più parametri!')) { ?>
     <div class="alert alert-danger">
         <?php echo $error ?>
     </div>

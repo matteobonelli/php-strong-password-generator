@@ -13,7 +13,7 @@ function passGenerator()
             if (isset($_GET['parametri']) && (!empty($_GET['parametri']))) {
                 if (count($_GET['parametri']) === 3) {
                     $allCharacters = $symbols . $letters . $numbers;
-                } else if (count($_GET['parametri']) === 2) {
+                } else {
                     $parameters = $_GET['parametri'];
                     for ($i = 0; $i < count($parameters); $i++) {
                         $newString = '';
@@ -27,16 +27,14 @@ function passGenerator()
                         }
                         $allCharacters .= $newString;
                     }
-                } else {
-                    return 'Inserisci almeno 2 parametri';
                 }
             } else {
-                return 'Inserisci almeno 2 parametri';
+                return 'Inserisci almeno un parametro';
             }
 
             if (isset($_GET['repeated'])) {
                 $repeated = $_GET['repeated'];
-                if ($repeated === 'norepeat') {
+                if ($repeated === 'norepeat' && strlen($allCharacters) >= $passLength) {
                     while (strlen($newPass) < $passLength) {
                         $newWord = $allCharacters[rand(0, strlen($allCharacters) - 1)];
                         if (!str_contains($newPass, $newWord)) {
@@ -48,6 +46,8 @@ function passGenerator()
                         $newWord = $allCharacters[rand(0, strlen($allCharacters) - 1)];
                         $newPass .= $newWord;
                     }
+                } else {
+                    return 'Inserisci più parametri!';
                 }
             } else {
                 return;
