@@ -1,25 +1,9 @@
 <?php
-function passGenerator($passLength)
-{
-    $symbols = '!?&%$<>^+-*/()[]{}@#_=';
-    $letters = 'abcdefghijklmnopqrstuvwxyz';
-    $upperLetter = strtoupper($letters);
-    $numbers = '1234567890';
-    $newPass = '';
-    while (strlen($newPass) < $passLength) {
-        $allCharacters = $symbols . $letters . $upperLetter . $numbers;
-        $newWord = $allCharacters[rand(0, strlen($allCharacters) - 1)];
-        if (!strpos($newPass, $newWord)) {
-            $newPass .= $newWord;
-        }
-    }
-    return $newPass;
-}
 
-if (isset($_GET['passLength']) && ($_GET['passLength'] !== '') && ($_GET['passLength'] <= 20) && ($_GET['passLength'] >= 8)) {
-    $passLength = $_GET['passLength'];
-    $newPass = passGenerator($passLength);
-}
+include __DIR__ . '/functions/functions.php';
+
+$newPass = passGenerator();
+var_dump($newPass);
 ?>
 
 
@@ -35,10 +19,14 @@ if (isset($_GET['passLength']) && ($_GET['passLength'] !== '') && ($_GET['passLe
 </head>
 
 <body>
-    <?php if (isset($newPass)) { ?>
+    <?php if (isset($newPass) && ($newPass !== 'Inserisci un numero valido')) { ?>
         <div class='alert alert-success'>
             <?php echo $newPass ?>
         </div>
+    <?php } else if (isset($newPass)) { ?>
+            <div class="alert alert-danger">
+            <?php echo $newPass ?>
+            </div>
     <?php } ?>
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET" class='py-5'>
         <input type="number" min="8" max="20" name="passLength">
