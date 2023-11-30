@@ -10,7 +10,7 @@ if (empty($_SESSION['newpassword'])) {
 
 ?>
 
-<main class="container">
+<main>
     <div class="alert alert-success">
         <?php echo $newPass ?>
     </div>
